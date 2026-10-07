@@ -1,0 +1,9 @@
+CREATE TABLE IF NOT EXISTS sources (
+    id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    name VARCHAR(255) NOT NULL CHECK (length(trim(name)) > 0),
+    url TEXT NOT NULL CHECK (url ~* '^(rtsp|http|https)://'),
+    location VARCHAR(255) NOT NULL CHECK (length(trim(location)) > 0),
+    enabled BOOLEAN NOT NULL DEFAULT TRUE,
+    created_at TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP
+);

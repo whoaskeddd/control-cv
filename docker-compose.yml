@@ -1,0 +1,40 @@
+services:
+  db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_DB: control_cv
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./backend/sql/init.sql:/docker-entrypoint-initdb.d/001-init.sql:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d control_cv"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  api:
+    build:
+      context: ./backend
+    environment:
+      DATABASE_URL: postgresql+psycopg://postgres:postgres@db:5432/control_cv
+      CORS_ORIGINS: http://localhost:5173
+    ports:
+      - "8000:8000"
+    depends_on:
+      db:
+        condition: service_healthy
+
+  frontend:
+    build:
+      context: ./frontend
+    ports:
+      - "3000:3000"
+    environment:
+      API_PROXY_TARGET: http://api:8000
+    depends_on:
+      - api
+
+volumes:
+  postgres_data:
