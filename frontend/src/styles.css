@@ -79,7 +79,6 @@ svg {
   stroke-width: 1.7;
 }
 .app-shell {
-  --sidebar: 238px;
   min-height: 100dvh;
 }
 .sidebar {
@@ -253,7 +252,7 @@ svg {
   justify-content: center;
 }
 .main-shell {
-  margin-left: var(--sidebar);
+  margin-left: 0;
   min-height: 100dvh;
   display: flex;
   flex-direction: column;

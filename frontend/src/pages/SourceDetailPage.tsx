@@ -47,7 +47,7 @@ export function SourceDetailPage() {
         Все источники
       </Link>
       <PageHeader
-        eyebrow={`ИСТОЧНИК / CAM–${String(source.id).padStart(3, "0")}`}
+        
         title={source.name}
         description="Параметры подключения и управление источником."
         action={<StatusBadge enabled={source.enabled} />}
